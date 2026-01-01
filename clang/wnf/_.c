@@ -77,14 +77,13 @@ __attribute__((hot)) fn Term wnf(Term term) {
         goto enter;
       }
 
-      // MOV is now a WHNF - it doesn't enter immediately
-      // This allows DP0/DP1 to see MOV and trigger DUP-MOV interaction
-      // case MOV: {
-      //   u32  loc  = term_val(next);
-      //   Term body = heap_read(loc + 1);
-      //   next = body;
-      //   goto enter;
-      // }
+      case MOV: {
+        u32  loc  = term_val(next);
+        Term body = heap_read(loc + 1);
+        stack[s_pos++] = term_new_got(loc);  // Push GOT frame
+        next = body;
+        goto enter;
+      }
 
       case UNS: {
         next = wnf_uns(next);
@@ -245,7 +244,6 @@ __attribute__((hot)) fn Term wnf(Term term) {
       case ERA:
       case SUP:
       case LAM:
-      case MOV:  // MOV is now a WHNF
       case NUM:
       case MAT:
       case SWI:

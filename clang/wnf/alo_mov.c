@@ -21,6 +21,8 @@ fn Term wnf_alo_mov(u32 ls_loc, u32 len, u32 book_loc) {
   Term result = term_new_mov(term_new(0, ALO, len, alo1), term_new(0, ALO, len + 1, alo2));
   printf("  Created MOV: mov_term_val=%u bind_ent=%u result=0x%llx\n",
          (u32)mov_term_val, (u32)bind_ent, (unsigned long long)result);
+  printf("  MOV node location: %u (val at +0, bod at +1)\n", term_val(result));
+  printf("  bind_ent points to: mov_term_val=%u\n", (u32)mov_term_val);
   fflush(stdout);
 
   return result;
