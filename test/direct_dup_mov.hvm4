@@ -1,0 +1,6 @@
+// Direct DUP-MOV test - duplicate a static MOV term
+@mov_term = (% x = 42; x)
+
+@test = λ&f. @mov_term
+
+@main = @test(λa.λb.[a,b])

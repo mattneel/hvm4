@@ -1,0 +1,4 @@
+// Simple MOV without any DUP - just to understand MOV behavior
+@test = (% k = 42; k)
+
+@main = @test
