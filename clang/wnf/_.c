@@ -77,13 +77,15 @@ __attribute__((hot)) fn Term wnf(Term term) {
         goto enter;
       }
 
-      case MOV: {
-        u32  loc  = term_val(next);
-        Term body = heap_read(loc + 1);
-        stack[s_pos++] = term_new_got(loc);  // Push GOT frame
-        next = body;
-        goto enter;
-      }
+      // MOV is a WHNF - doesn't enter immediately
+      // This allows DUP to see MOV and create independent copies
+      // case MOV: {
+      //   u32  loc  = term_val(next);
+      //   Term body = heap_read(loc + 1);
+      //   stack[s_pos++] = term_new_got(loc);  // Push GOT frame
+      //   next = body;
+      //   goto enter;
+      // }
 
       case UNS: {
         next = wnf_uns(next);
@@ -244,6 +246,7 @@ __attribute__((hot)) fn Term wnf(Term term) {
       case ERA:
       case SUP:
       case LAM:
+      case MOV:  // MOV is WHNF so DUP can see and duplicate it
       case NUM:
       case MAT:
       case SWI:
