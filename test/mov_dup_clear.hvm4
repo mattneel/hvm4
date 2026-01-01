@@ -1,0 +1,8 @@
+// Clear test: DUP should duplicate MOV, giving independent bindings
+@test = λo.
+  ! X &L = (% f = o; f)
+  [X₀, X₁]
+
+@id = λx.x
+
+@main = @test(@id)

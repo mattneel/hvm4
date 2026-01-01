@@ -1,0 +1,8 @@
+// Test if DUP has sharing issues when duplicated
+@test = λo.
+  ! X &L1 = (! y &L2 = o; y₀)
+  [X₀, X₁]
+
+@id = λx.x
+
+@main = @test(@id)

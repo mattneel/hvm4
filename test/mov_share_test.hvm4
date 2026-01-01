@@ -1,0 +1,10 @@
+// Test if MOV bindings are properly isolated when duplicated
+@test = λo.
+  % f = o
+  ! A = f
+  ! B = f
+  [A, B]
+
+@id = λx.x
+
+@main = @test(@id)
