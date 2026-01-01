@@ -1,0 +1,11 @@
+// INV-4: Value Preservation
+// Test: Value in MOV must not be lost or corrupted
+
+@identity = λx. x
+
+@test =
+  ! val = 999
+  ! result = (% x = val; @identity(x))
+  result
+
+@main = @test  // Should output 999

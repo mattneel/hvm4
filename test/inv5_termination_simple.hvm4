@@ -1,0 +1,16 @@
+// INV-5: Termination Parity (simple version)
+// Test: MOV version should complete in reasonable interactions
+
+// Using DUP
+@with_dup = λ&f. λ&g. λx. f(g(x))
+
+// Using MOV
+@with_mov = λ&f. λ&g.
+  % a = f
+  % b = g
+  λx. a(b(x))
+
+@main =
+  ! dup_result = @with_dup(λy.y, λz.z, 42)
+  ! mov_result = @with_mov(λy.y, λz.z, 42)
+  [dup_result, mov_result]  // Should both be [42, 42]

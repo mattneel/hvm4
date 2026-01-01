@@ -1,0 +1,6 @@
+// DUP-DUP (the working version for comparison)
+@test = λx.
+  ! dup &L = (λ&k. k(k))
+  [dup₀(x), dup₁(x)]
+
+@main = @test(λa.a)

@@ -1,0 +1,6 @@
+// DUP-MOV where the moved value is used multiple times
+@test = λx.
+  ! mov &L = (% k = x; k(k))
+  [mov₀, mov₁]
+
+@main = @test(λa.a)

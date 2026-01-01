@@ -1,0 +1,13 @@
+// INV-1: Substitution Equivalence
+// Test: % x = v; body should equal [v/x]body
+
+// Direct substitution: (λx. x)(42) → 42
+@direct = (λx. x)(42)
+
+// Using MOV: % x = 42; x → should also be 42
+@with_mov = (% x = 42; x)
+
+@main =
+  ! d = @direct
+  ! m = @with_mov
+  [d, m]  // Should output [42, 42]

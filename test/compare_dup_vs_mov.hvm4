@@ -1,0 +1,16 @@
+// Compare DUP vs MOV for the same operation
+
+// Using DUP (should work)
+@with_dup = λ&x.
+  ! f &L = (λ&k. k)
+  [f₀(x), f₁(x)]
+
+// Using MOV (currently broken)
+@with_mov = λx.
+  ! f &L = (% k = x; k)
+  [f₀, f₁]
+
+@main_dup = @with_dup(42)
+@main_mov = @with_mov(42)
+
+@main = [@main_dup, @main_mov]

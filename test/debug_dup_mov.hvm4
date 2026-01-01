@@ -1,0 +1,8 @@
+// Minimal DUP-MOV test for debugging
+// This should duplicate a MOV node and use both copies
+
+@test =
+  ! mov &L = (% x = 42; x)
+  [mov₀, mov₁]
+
+@main = @test

@@ -1,0 +1,13 @@
+// INV-2: DUP-MOV Equivalence
+// Test: Duplicating a MOV node must produce same result as duplicating substituted form
+
+// DUP of MOV: &{(% x = 42; x)}
+@mov_dup = λ&f. (% x = 42; x)
+
+// DUP of substituted: &{42}
+@subst_dup = λ&f. 42
+
+@main =
+  ! mov = @mov_dup(λa.λb. [a, b])
+  ! sub = @subst_dup(λa.λb. [a, b])
+  [mov, sub]  // Should both output [42, 42]

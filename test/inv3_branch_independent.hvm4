@@ -1,0 +1,11 @@
+// INV-3: Branch Independence
+// Test: Each copy of MOV from DUP must independently resolve
+
+@test = λ&f.
+  % x = 100
+  x
+
+@main =
+  // Each branch should independently get value 100
+  @test(λa.λb. [a, b])
+  // Expected: [100, 100]
