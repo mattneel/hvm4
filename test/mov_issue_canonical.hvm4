@@ -55,7 +55,7 @@
   ! I = (λ&p. λxs. λ&o. λi. λe.
     ! O = λxs. o(@insert_A(p, xs))
     ! I = λxs. i(@insert_A(p, xs))
-    ! E = o(@insert(p, @N))
+    ! E = o(@insert_A(p, @N))
     xs(O, I, E))
   ! E = λxs. λo. λ&i. λe.
     ! O = λxs. i(xs)
