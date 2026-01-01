@@ -27,17 +27,28 @@ fn Term wnf_dup_mov(u32 lab, u32 loc, u8 side, Term mov) {
   Copy V     = term_clone_at(at + 0, lab);
   Copy B     = term_clone_at(at + 1, lab);
 
-  printf("  V cloned: V0=0x%llx V1=0x%llx\n", (unsigned long long)V.k0, (unsigned long long)V.k1);
-  printf("  B cloned: B0=0x%llx B1=0x%llx\n", (unsigned long long)B.k0, (unsigned long long)B.k1);
+  printf("  V cloned: V0=0x%llx (tag=%u val=%u) V1=0x%llx (tag=%u val=%u)\n",
+         (unsigned long long)V.k0, term_tag(V.k0), term_val(V.k0),
+         (unsigned long long)V.k1, term_tag(V.k1), term_val(V.k1));
+  printf("  B cloned: B0=0x%llx (tag=%u val=%u) B1=0x%llx (tag=%u val=%u)\n",
+         (unsigned long long)B.k0, term_tag(B.k0), term_val(B.k0),
+         (unsigned long long)B.k1, term_tag(B.k1), term_val(B.k1));
+
+  // Check what's at the shared location
+  if (term_tag(V.k0) == DP0 || term_tag(V.k0) == DP1) {
+    u32 shared_loc = term_val(V.k0);
+    printf("  V DP0/DP1 point to shared location %u: 0x%llx\n",
+           shared_loc, (unsigned long long)heap_read(shared_loc));
+  }
 
   // Create two MOV nodes
   Term r0    = term_new_mov_at(at + 2, V.k0, B.k0);
   Term r1    = term_new_mov_at(at + 4, V.k1, B.k1);
 
-  // Try WITHOUT substitution - just duplicate the ALO terms
-  // The ALO mechanism should handle binding resolution automatically
-  printf("  Created r0=0x%llx at loc %u, r1=0x%llx at loc %u\n",
-         (unsigned long long)r0, at + 2, (unsigned long long)r1, at + 4);
+  printf("  Created MOV₀ at %u: val=0x%llx bod=0x%llx\n",
+         at + 2, (unsigned long long)heap_read(at + 2), (unsigned long long)heap_read(at + 3));
+  printf("  Created MOV₁ at %u: val=0x%llx bod=0x%llx\n",
+         at + 4, (unsigned long long)heap_read(at + 4), (unsigned long long)heap_read(at + 5));
 
   return heap_subst_cop(side, loc, r0, r1);
 }
