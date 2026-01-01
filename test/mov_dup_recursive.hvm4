@@ -1,0 +1,45 @@
+// Test with recursive function
+
+@O = λp. λo. λi. λe. o(p)
+@I = λp. λo. λi. λe. i(p)
+@E =     λo. λi. λe. e
+
+@view = λxs.
+  ! O = λp. #O{@view(p)}
+  ! I = λp. #I{@view(p)}
+  ! E = #E
+  xs(O, I, E)
+
+// Version A: using DUP
+@insert_A = λn.
+  ! O = &{}
+  ! I = (λ&p. λxs. λ&o. λi. λe.
+    ! O = λxs. o(@insert_A(p, xs))
+    ! I = λxs. i(@insert_A(p, xs))
+    ! E = o(@insert_A(p, @E))
+    xs(O, I, E))
+  ! E = λxs. λo. λ&i. λe.
+    ! O = λxs. i(xs)
+    ! I = λxs. i(xs)
+    ! E = i(@E)
+    xs(O, I, E)
+  n(O, I, E)
+
+// Version B: using MOV
+@insert_B = λn.
+  ! O = &{}
+  ! I = (λ&p. λxs. λ&o. λi. λe.
+    % f = o
+    ! O = λxs. f(@insert_B(p, xs))
+    ! I = λxs. i(@insert_B(p, xs))
+    ! E = f(@insert_B(p, @E))
+    xs(O, I, E))
+  ! E = λxs. λo. λ&i. λe.
+    % k = i
+    ! O = λxs. k(xs)
+    ! I = λxs. k(xs)
+    ! E = k(@E)
+    xs(O, I, E)
+  n(O, I, E)
+
+@main = @view(@insert_B(@I(@I(@E)), @O(@O(@E))))

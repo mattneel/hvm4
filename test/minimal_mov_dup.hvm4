@@ -1,0 +1,15 @@
+// Minimal test: DUP then use twice
+
+// With DUP (works)
+@test_dup = λf.
+  ! X &L = f
+  [X₀, X₁]
+
+// With MOV (should work the same)
+@test_mov = λf.
+  ! X &L = (% g = f; g)
+  [X₀, X₁]
+
+@id = λx.x
+
+@main = @test_mov(@id)
