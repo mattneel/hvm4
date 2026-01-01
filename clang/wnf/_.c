@@ -719,6 +719,13 @@ __attribute__((hot)) fn Term wnf(Term term) {
               continue;
             }
             // case APP: // !! DO NOT ADD: GOT does not interact with APP.
+            case MOV: {
+              u32 mov_loc = term_val(whnf);
+              Term bod = heap_read(mov_loc + 1);
+              stack[s_pos++] = frame;
+              next = bod;
+              goto enter;
+            }
             case MAT:
             case SWI:
             case USE:

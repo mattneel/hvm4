@@ -1,0 +1,8 @@
+// Test MOV with recursion
+@test = λn.
+  ! X &L = (% f = n; f(f))
+  X₀(X₁)
+
+@id = λx.x
+
+@main = @test(@id)

@@ -1,0 +1,12 @@
+// Test pattern similar to insert_B
+@test = λo.
+  ! X &L = (λ&xs.
+    % f = o
+    ! A = λys. f(xs)
+    ! B = λzs. f(xs)
+    [A, B])
+  X₀(#E)
+
+@id = λx.x
+
+@main = @test(@id)

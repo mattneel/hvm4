@@ -1,0 +1,9 @@
+// Test: what happens when a GOT encounters a MOV?
+// This should test the chain: outer MOV creates GOT, GOT encounters inner MOV
+@test = λf.
+  % x = (% y = f; y)
+  x
+
+@id = λz.z
+
+@main = @test(@id)
