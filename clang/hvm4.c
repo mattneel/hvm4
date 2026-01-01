@@ -426,6 +426,7 @@ static int    PARSE_FORK_SIDE = -1;      // -1 = off, 0 = left branch (DP0), 1 =
 #include "wnf/dup_lam.c"
 #include "wnf/dup_sup.c"
 #include "wnf/dup_nod.c"
+fn Term wnf_at(u32 loc);  // Forward declaration for dup_mov
 #include "wnf/dup_mov.c"
 #include "wnf/mov_nam.c"
 #include "wnf/mov_dry.c"
