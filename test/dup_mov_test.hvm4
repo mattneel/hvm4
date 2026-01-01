@@ -1,0 +1,6 @@
+// Test DUP-MOV interaction
+@test = λx.
+  ! f &L = (% k = x; k(k))
+  [f₀, f₁]
+
+@main = @test(λa.a)

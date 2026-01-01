@@ -18,7 +18,7 @@ fn Term wnf_mov_nod(u32 loc, Term term) {
   u32  got_loc = (u32)base;
   u32  nod_loc = got_loc + ari;
   for (u32 i = 0; i < ari; i++) {
-    heap_write(got_loc + i, heap_read(t_loc + i));
+    heap_write(got_loc + i, term_sub_set(heap_read(t_loc + i), 0));
     heap_write(nod_loc + i, term_new_got(got_loc + i));
   }
   Term res = term_new(0, t_tag, t_ext, nod_loc);

@@ -1,0 +1,9 @@
+// Test MOV inside DUP branches
+@test = λo. λi.
+  ! O = (% f = o; f(f))
+  ! I = (% k = i; k(k))
+  [O, I]
+
+@id = λx.x
+
+@main = @test(@id, @id)

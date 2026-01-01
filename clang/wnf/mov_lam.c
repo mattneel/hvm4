@@ -11,7 +11,7 @@ fn Term wnf_mov_lam(u32 loc, Term lam) {
   u64  base    = heap_alloc(2);
   u32  g_loc   = (u32)base;
   u32  x_loc   = g_loc + 1;
-  heap_write(g_loc, bod);
+  heap_write(g_loc, term_sub_set(bod, 0));
   heap_write(x_loc, term_new_got(g_loc));
   heap_subst_var(lam_loc, term_new(0, VAR, 0, x_loc));
   Term res     = term_new(0, LAM, lam_ext, x_loc);

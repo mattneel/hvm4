@@ -1,0 +1,6 @@
+// Simple MOV test
+@test = λx.
+  % f = x
+  f(f)
+
+@main = @test(λa.a)
